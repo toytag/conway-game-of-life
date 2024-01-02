@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <style>
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+  </style>
+
+  <title>Conway's Game of Life</title>
+</head>
+
+<body>
+  <div class="flex h-screen flex-col items-center p-4">
+    <nav class="navbar max-w-[768px] items-center rounded-xl border border-teal-400 shadow-xl dark:border-teal-900">
+      <div class="flex-1">
+        <p class="mx-2 text-lg font-bold md:text-xl">Conway's&nbsp;<br class="min-[405px]:hidden"/>Game of Life</p>
+      </div>
+      <p class="mx-4 hidden italic md:block">Implementation in</p>
+      <a href="/" class="mx-2 text-sm text-warning max-[535px]:hidden">JavaScript</a>
+      <a href="/" class="mx-1 text-sm text-warning min-[535px]:hidden">JS</a>
+      <a href="/wasm" class="mx-2 text-sm text-primary max-[535px]:hidden">WebAssembly</a>
+      <a href="/wasm" class="mx-1 text-sm text-primary min-[535px]:hidden">WASM</a>
+      <a href="/webgpu" class="mx-2 mr-2 text-sm text-info max-[535px]:hidden">WebGPU</a>
+      <a href="/webgpu" class="mx-1 mr-1 text-sm text-info min-[535px]:hidden">WebGPU</a>
+    </nav>
+    <div id="content" class="w-full max-w-[768px] p-4"></div>
+  </div>
+
+  <script defer>
+    const routes = {
+      "/": "/src/js/index.html",
+      "/wasm": "src/wasm/index.html",
+      "/webgpu": "src/webgpu/index.html",
+    };
+
+    function setActiveLink(path) {
+      document.querySelectorAll(`a[href="${path}"]`).forEach((link) => {
+        if (link) {
+          link.classList.add("underline");
+        }
+      });
+    }
+
+    function loadContent(path) {
+      const contentDiv = document.getElementById("content");
+      fetch(routes[path])
+        .then((response) => response.text())
+        .then((html) => {
+          contentDiv.innerHTML = html;
+          contentDiv
+            .querySelectorAll("script")
+            .forEach((script) => import(script.src));
+        })
+        .catch((error) => {
+          console.error("Error fetching content:", error);
+          contentDiv.innerHTML =
+            `<p class="text-3xl">Error loading content.</p>`;
+        });
+    }
+
+    setActiveLink(window.location.pathname);
+    loadContent(window.location.pathname);
+  </script>
+</body>
+
+</html>

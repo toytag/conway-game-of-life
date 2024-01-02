@@ -1,0 +1,25 @@
+{
+  "name": "conway-game-of-life",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "postinstall": "(cd src/wasm && npm install) && (cd src/webgpu && npm install)",
+    "dev": "vite",
+    "build": "(cd src/wasm && npm run asbuild:release) && (cd src/webgpu && npm run build) && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@webgpu/types": "^0.1.40",
+    "autoprefixer": "^10.4.16",
+    "daisyui": "^4.4.24",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "vite": "^5.0.8",
+    "vite-plugin-html": "^3.2.1",
+    "vite-plugin-top-level-await": "^1.4.1"
+  },
+  "dependencies": {
+    "typescript": "^5.3.3"
+  }
+}
