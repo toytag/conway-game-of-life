@@ -21,6 +21,7 @@ init({
 let start = performance.now();
 let count = 0; // frame count
 let fps = 0; // frames per second, exponential moving average
+let time = 0; // simulation time, exponential moving average
 setInterval(() => {
   const elapsed = performance.now() - start;
   // Calculate the FPS
@@ -34,18 +35,23 @@ setInterval(() => {
 }, 100);
 setInterval(() => {
   document.querySelector("#fps").textContent =
-    `Frames Per Second: ${fps.toFixed(2)}`;
+    `Frames Per Second: ${fps.toFixed(0)}`;
+  document.querySelector("#time").textContent =
+    `Simulation Time: ${(time).toFixed(2)}ms`;
 }, 1000);
 
 // draw grid based on the Uint32Array
 const imageData = ctx.createImageData(width, height);
 const argb = new Uint32Array(imageData.data.buffer);
 function render() {
+  const simStart = performance.now();
   step();
+  // Calculate the simulation time
+  time = (0.9 * time) + (0.1 * (performance.now() - simStart));
   argb.set(new Uint32Array(getCellState()));
   ctx.putImageData(imageData, 0, 0);
   count++; // Update the FPS counter
   requestAnimationFrame(render);
 }
 
-render();
+requestAnimationFrame(render);

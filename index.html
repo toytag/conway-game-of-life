@@ -10,17 +10,13 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
   <link rel="manifest" href="/site.webmanifest" />
 
-  <style>
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-  </style>
+  <link rel="stylesheet" href="/index.css" />
 
   <title>Conway's Game of Life</title>
 </head>
 
 <body>
-  <div class="flex h-screen flex-col items-center p-4">
+  <div class="flex min-h-screen flex-col items-center p-4">
     <nav class="navbar max-w-[768px] items-center rounded-xl border border-teal-400 shadow-xl dark:border-teal-900">
       <div class="flex-1">
         <p class="mx-2 text-lg font-bold md:text-xl">Conway's&nbsp;<br class="min-[405px]:hidden"/>Game of Life</p>
@@ -33,7 +29,7 @@
       <a href="/webgpu" class="mx-2 mr-2 text-sm text-info max-[535px]:hidden">WebGPU</a>
       <a href="/webgpu" class="mx-1 mr-1 text-sm text-info min-[535px]:hidden">WebGPU</a>
     </nav>
-    <div id="content" class="w-full max-w-[768px] p-4"></div>
+    <div id="content" class="w-full max-w-[768px] px-4"></div>
   </div>
 
   <script defer>
